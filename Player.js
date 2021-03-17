@@ -19,7 +19,6 @@ class Player extends Character {
         
          super(game, width, height, x, y, speed, myImage, myImageDead);
          this.lives = NUMBER_LIVES;
-         this.restar = 1;
     }
 
     /**
@@ -61,7 +60,7 @@ class Player extends Character {
                     this.dead = false;
                     this.image.src = this.myImage;
                 }, 2000);
-                this.lives = this.lives - this.restar;
+                this.lives -= 1;
             }        
          } 
     }

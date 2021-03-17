@@ -1,3 +1,4 @@
+
 /**
  * Personaje principal del juego. Hereda de la clase Character.
  * @extends Character
@@ -15,8 +16,10 @@ class Player extends Character {
             speed = PLAYER_SPEED,
             myImage = PLAYER_PICTURE,
             myImageDead = PLAYER_PICTURE_DEAD;
-
-        super(game, width, height, x, y, speed, myImage, myImageDead);
+        
+         super(game, width, height, x, y, speed, myImage, myImageDead);
+         this.lives = NUMBER_LIVES;
+         this.restar = 1;
     }
 
     /**
@@ -47,10 +50,19 @@ class Player extends Character {
      */
     collide() {
         if (!this.dead) {
-            setTimeout(() => {
-                this.game.endGame();
-            }, 2000);
             super.collide();
-        }
+            if (this.lives <= 0){
+                setTimeout(() => {
+                    this.game.endGame();
+                }, 2000);
+                
+            }else {  
+                setTimeout(() => {
+                    this.dead = false;
+                    this.image.src = this.myImage;
+                }, 2000);
+                this.lives = this.lives - this.restar;
+            }        
+         } 
     }
 }

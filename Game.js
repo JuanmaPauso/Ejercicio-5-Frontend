@@ -17,6 +17,7 @@ class Game {
         this.opponentShots = []; // Disparos del oponente
         this.xDown = null; //  Posición en la que el usuario ha tocado la pantalla
         this.paused = false; // Indica si el juego está pausado
+        this.score = 0;
     }
 
     /**
@@ -38,7 +39,7 @@ class Game {
             this.started = true;
             this.width = window.innerWidth;
             this.height = window.innerHeight;
-
+           
             this.player = new Player(this);
             this.timer = setInterval(() => this.update(), 50);
         }
@@ -89,7 +90,7 @@ class Game {
         if (this.opponent) {
             document.body.removeChild(this.opponent.image);
         }
-        this.opponent = new Opponent(this);
+        this.opponent = new Boss(this);
     }
 
     /**
@@ -162,6 +163,7 @@ class Game {
      * Comrpueba si el personaje principal y el oponente se han chocado entre sí o con los disparos haciendo uso del método hasCollision
      */
     checkCollisions () {
+       
         let impact = false;
 
         for (let i = 0; i < this.opponentShots.length; i++) {
@@ -207,8 +209,8 @@ class Game {
      */
     endGame () {
         this.ended = true;
-        let gameOver = new Entity(this, this.width / 2, "auto", this.width / 4, this.height / 4, 0, GAME_OVER_PICTURE)
-        gameOver.render();
+        let youWin = new Entity(this, this.width / 2, "auto", this.width / 4, this.height / 4, 0, (this.opponent.dead)?YOU_WIN_PICTURE:GAME_OVER_PICTURE)
+        youWin.render();
     }
 
     /**
@@ -236,6 +238,7 @@ class Game {
             });
             this.checkCollisions();
             this.render();
+         
         }
     }
 
@@ -243,6 +246,7 @@ class Game {
      * Muestra todos los elementos del juego en la pantalla
      */
     render () {
+
         this.player.render();
         if (this.opponent !== undefined) {
             this.opponent.render();
@@ -253,5 +257,7 @@ class Game {
         this.opponentShots.forEach((shot) => {
             shot.render();
         });
+        document.getElementById("scoreli").innerHTML =`Score: ${this.score}`;
+        document.getElementById("livesli").innerHTML =`Lives: ${this.player.lives}`;
     }
 }

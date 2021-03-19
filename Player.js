@@ -50,7 +50,7 @@ class Player extends Character {
     collide() {
         if (!this.dead) {
             super.collide();
-            if (this.lives <= 0){
+            if (this.lives = 0){
                 setTimeout(() => {
                     this.game.endGame();
                 }, 2000);
